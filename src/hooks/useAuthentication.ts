@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
-import produce from "immer";
 
 export type AuthenticationState = {
   user?: UserState;

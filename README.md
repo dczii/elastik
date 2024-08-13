@@ -14,23 +14,15 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# Challenge Details
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+All links are deployed in AWS Lambda with API Gateway
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+For Postman Testing - [Postman Collection Link](https://www.postman.com/thevirtualwild/workspace/my-workspace/collection/25150392-5fd30c9a-33d8-45d3-bd03-e8c101b96515?action=share&creator=25150392)
 
-## Learn More
+Students API Link -
+[Github Gist](https://gist.github.com/dczii/270d161f97b6d533ac2576b8d32bc174)
 
-To learn more about Next.js, take a look at the following resources:
+Register API Link - [Github Gist](https://gist.github.com/dczii/c78758a5436bb9624159f6388dae1f0b)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Login API Link - [Github Gist](https://gist.github.com/dczii/31028bf653134c98b483520ae58e37e7)
