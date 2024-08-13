@@ -1,16 +1,30 @@
 "use client";
 import { useRouter } from "next/navigation";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Button from "devextreme-react/button";
 import { useAuthentication } from "@/hooks/useAuthentication";
 import DataGrid, { Column } from "devextreme-react/data-grid";
+import { Toast } from "devextreme-react/toast";
 
 const columns = ["ID", "FirstName", "LastName", "DateOfBirth", "CreatedBy", ""];
+const url = "https://vdr0g45lhg.execute-api.ap-southeast-2.amazonaws.com/students";
+const headers = {
+  "Content-Type": "application/json",
+};
 
 const StudentsPage = () => {
   const { user, signOut } = useAuthentication();
   const [listData, setListData] = useState([]);
+  const [toastConfig, setToastConfig] = useState({
+    isVisible: false,
+    type: "info",
+    message: "",
+  } as {
+    isVisible: boolean;
+    type: "info" | "error" | "success";
+    message: string;
+  });
 
   const router = useRouter();
 
@@ -22,7 +36,6 @@ const StudentsPage = () => {
   }, []);
 
   const getStudentsList = async () => {
-    const url = "https://vdr0g45lhg.execute-api.ap-southeast-2.amazonaws.com/students";
     const response = await fetch(url, {
       method: "GET",
     })
@@ -53,14 +66,27 @@ const StudentsPage = () => {
     router.push("/");
   };
 
-  const handleDelete = async (id) => {
-    const url = `https://vdr0g45lhg.execute-api.ap-southeast-2.amazonaws.com/students/${id}`;
+  const onHiding = useCallback(() => {
+    setToastConfig({
+      ...toastConfig,
+      isVisible: false,
+    });
+  }, [toastConfig, setToastConfig]);
+
+  const handleDelete = async (data: any) => {
+    const body = { user: data.ID, firstName: data.FirstName, lastName: data.LastName };
     await fetch(url, {
+      headers,
       method: "DELETE",
+      body: JSON.stringify(body),
     })
       .then((response) => {
         if (response.ok) {
-          setListData(listData.filter((item) => item.ID !== id));
+          setToastConfig({
+            isVisible: true,
+            type: "success",
+            message: `${body.firstName} ${body.lastName} is successfully Deleted!`,
+          });
         } else {
           console.error("Failed to delete the item");
         }
@@ -85,12 +111,21 @@ const StudentsPage = () => {
           defaultColumns={columns}
           showBorders={true}
           editing={{ allowDeleting: true }}
+          onRowRemoved={(e) => handleDelete(e.data)}
         >
           {columns.map((column, index) => (
             <Column dataField={column} key={index} />
           ))}
         </DataGrid>
       </main>
+      <Toast
+        visible={toastConfig.isVisible}
+        message={toastConfig.message}
+        type={toastConfig.type}
+        onHiding={onHiding}
+        displayTime={5000}
+        position='top'
+      />
     </div>
   );
 };
